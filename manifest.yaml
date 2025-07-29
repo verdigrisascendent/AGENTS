@@ -1,0 +1,34 @@
+version: 1
+agents:
+  - id: ctx
+    file: context_manager.md
+    provides: [rules_cache, snapshots, routing, health]
+    needs: [litd_rules_canon.md]
+  - id: gsg
+    file: game_state_guardian.md
+    provides: [state_machine, rules_application]
+    needs: [ctx.rules]
+  - id: tad
+    file: test_automator_debugger.md
+    provides: [tests]
+    needs: [ctx.rules, gsg.contract, fe_ar.hud_contract, hbe.contract]
+  - id: rva
+    file: rules-verifier-agent.md
+    provides: [flattened_rules, drift_report]
+    needs: [litd_rules_canon.md, gsg.contract, fe_ar.hud_contract, hbe.contract]
+  - id: fe_ar
+    file: frontend_developer_architect_reviewer.md
+    provides: [hud_contract]
+    needs: [amiga_aesthetic_enforcer.contract, ctx.rules]
+  - id: enforcer
+    file: amiga_aesthetic_enforcer.md
+    provides: [palette_contract, grid_contract]
+    needs: []
+  - id: gsa
+    file: godot_scene_architect.md
+    provides: [screen_map]
+    needs: [fe_ar.hud_contract]
+  - id: hbe
+    file: hardware_bridge_engineer.md
+    provides: [bridge_contract]
+    needs: [hardware_integration_effects_spec.md, ctx.rules]
